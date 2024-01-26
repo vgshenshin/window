@@ -43,11 +43,11 @@ const forms = (state) => {
             }
 
             postData('assets/server.php', formData)
-                .then(res => {
+                .then((res) => {
                     console.log(res);
                     statusMessage.textContent = message.success;
                 })
-                .catch(() => {statusMessage.textContent = message.failure;})
+                .catch(() => statusMessage.textContent = message.failure)
                 .finally(() => {
                     clearInputs();
                     setTimeout(() => {

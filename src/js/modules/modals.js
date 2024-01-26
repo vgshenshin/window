@@ -20,13 +20,18 @@ const modals = () => {
             });
         });
 
-        close.addEventListener('click', () => {
+        function closeModal() {
             windows.forEach(item => {
                 item.style.display = 'none';
             });
 
             modal.style.display = 'none';
             document.body.style.overflow = ''; 
+        }
+
+        close.addEventListener('click', closeModal);
+        window.addEventListener('keydown', (e) => {
+            if(e.key === 'Escape') closeModal();
         });
 
         modal.addEventListener('click', (e) => {
