@@ -1,6 +1,6 @@
 import checkNumInputs from './checkNumInputs';
 
-const changeModalState = (state) => {
+const changeModalState = () => {
     const windowForm = document.querySelectorAll('.balcon_icons_img'),
           windowWidth = document.querySelectorAll('#width'),
           windowHeight = document.querySelectorAll('#height'),
@@ -10,16 +10,18 @@ const changeModalState = (state) => {
     checkNumInputs('#width');
     checkNumInputs('#height');
 
+    let modalState = {};
+
     function bindActionToElems(event, elem, prop) {
         elem.forEach((item, i) => {
             item.addEventListener(event, () => {
                 switch(item.nodeName) {
                     case 'SPAN' :
-                        state[prop] = i;
+                        modalState[prop] = i;
                         break;
                     case 'INPUT' :
                         if (item.getAttribute('type') === 'checkbox') {
-                            i === 0 ? state[prop] = 'Холодное' : state[prop] = 'Теплое';
+                            i === 0 ? modalState[prop] = 'Холодное' : modalState[prop] = 'Теплое';
                             elem.forEach((box, j) => {
                                 box.checked = false;
                                 if (i == j) {
@@ -27,15 +29,14 @@ const changeModalState = (state) => {
                                 }
                             });
                         } else {
-                            state[prop] = item.value;
+                            modalState[prop] = item.value;
                         }
                         break;
                     case 'SELECT' :
-                        state[prop] = item.value;
+                        modalState[prop] = item.value;
                         break;
                 }
 
-                console.log(state);
             });
         });
     }
@@ -46,6 +47,7 @@ const changeModalState = (state) => {
     bindActionToElems('change', windowType, 'type');
     bindActionToElems('change', windowProfile, 'profile');
 
+    return modalState;
 };
 
 export default changeModalState;
