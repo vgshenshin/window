@@ -13,6 +13,20 @@ body {
   color: #000000;
 }
 
+.faded {
+  animation: faded 1.2s;
+}
+
+@keyframes faded {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 .status {
   display: block;
   color: red;
