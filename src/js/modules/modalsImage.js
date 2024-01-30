@@ -1,8 +1,12 @@
+import modals from "./modals";
 
 const modalsImage = () => {
     const wrapper = document.querySelector('.works'),
         modal = document.createElement('div'),
-        bigImage = document.createElement('img');
+        bigImage = document.createElement('img'),
+        scroll = modals();
+
+        console.log(scroll);
 
     modal.classList.add('popup');
     modal.style.cssText = `
@@ -22,6 +26,8 @@ const modalsImage = () => {
             if(e.target && e.target.classList.contains('preview')) {
                 modal.style.display = 'flex';
                 document.body.style.overflow = 'hidden';
+                document.body.style.marginRight = scroll + 'px';
+
                 
                 const path = e.target.parentNode.getAttribute('href')
 
@@ -31,6 +37,7 @@ const modalsImage = () => {
             if(e.target && e.target.matches('div.popup')) {
                 modal.style.display = '';
                 document.body.style.overflow = '';
+                document.body.style.marginRight = '0px';
             }
     });
 }

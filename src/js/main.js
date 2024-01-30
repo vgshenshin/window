@@ -9,7 +9,7 @@ import modalsImage from "./modules/modalsImage";
 window.addEventListener('DOMContentLoaded', () => {
     "use strict";
 
-    const deadline = "01/28/2024 15:40:00";
+    const deadline = "05/28/2024 15:40:00";
 
     changeModalState();
     modals();

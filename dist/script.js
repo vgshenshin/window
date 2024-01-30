@@ -13861,7 +13861,7 @@ __webpack_require__.r(__webpack_exports__);
 window.addEventListener('DOMContentLoaded', () => {
   "use strict";
 
-  const deadline = "01/28/2024 15:40:00";
+  const deadline = "05/28/2024 15:40:00";
   Object(_modules_changeModalState__WEBPACK_IMPORTED_MODULE_4__["default"])();
   Object(_modules_modals__WEBPACK_IMPORTED_MODULE_1__["default"])();
   Object(_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])('.glazing_slider', '.glazing_block', '.glazing_content', 'active');
@@ -14038,6 +14038,7 @@ const modals = () => {
       modal = document.querySelector(modalSelector),
       close = document.querySelector(closeSelector),
       windows = document.querySelectorAll('[data-modal]');
+    scroll = calcScroll();
     trigger.forEach(item => {
       item.addEventListener('click', e => {
         if (e.target) {
@@ -14048,6 +14049,7 @@ const modals = () => {
         });
         modal.style.display = 'block';
         document.body.style.overflow = 'hidden';
+        document.body.style.marginRight = scroll + 'px';
       });
     });
     function closeModal() {
@@ -14056,18 +14058,12 @@ const modals = () => {
       });
       modal.style.display = 'none';
       document.body.style.overflow = '';
+      document.body.style.marginRight = '0px';
     }
     close.addEventListener('click', closeModal);
-    window.addEventListener('keydown', e => {
-      if (e.key === 'Escape') closeModal();
-    });
     modal.addEventListener('click', e => {
       if (e.target === modal && closeClickOverlay) {
-        windows.forEach(item => {
-          item.style.display = 'none';
-        });
-        modal.style.display = 'none';
-        document.body.style.overflow = '';
+        closeModal();
       }
     });
   }
@@ -14075,7 +14071,19 @@ const modals = () => {
     setTimeout(function () {
       document.querySelector(selector).style.display = 'block';
       document.body.style.overflow = 'hidden';
+      document.body.style.marginRight = scroll + 'px';
     }, time);
+  }
+  function calcScroll() {
+    const div = document.createElement('div');
+    div.style.width = '50px';
+    div.style.height = '50px';
+    div.style.overflowY = 'scroll';
+    div.style.visibility = 'hidden';
+    document.body.appendChild(div);
+    const scrollWidth = div.offsetWidth - div.clientWidth;
+    div.remove();
+    return scrollWidth;
   }
   bindModal('.popup_engineer_btn', '.popup_engineer', '.popup_engineer .popup_close');
   bindModal('.phone_link', '.popup', '.popup .popup_close');
@@ -14083,6 +14091,8 @@ const modals = () => {
   bindModal('.popup_calc_button', '.popup_calc_profile', '.popup_calc_profile_close', false);
   bindModal('.popup_calc_profile_button', '.popup_calc_end', '.popup_calc_end_close', false);
   // showModalByTime('.popup', 60000);
+
+  return scroll;
 };
 /* harmony default export */ __webpack_exports__["default"] = (modals);
 
@@ -14097,10 +14107,14 @@ const modals = () => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _modals__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modals */ "./src/js/modules/modals.js");
+
 const modalsImage = () => {
   const wrapper = document.querySelector('.works'),
     modal = document.createElement('div'),
-    bigImage = document.createElement('img');
+    bigImage = document.createElement('img'),
+    scroll = Object(_modals__WEBPACK_IMPORTED_MODULE_0__["default"])();
+  console.log(scroll);
   modal.classList.add('popup');
   modal.style.cssText = `
         justify-content: center;
@@ -14114,12 +14128,14 @@ const modalsImage = () => {
     if (e.target && e.target.classList.contains('preview')) {
       modal.style.display = 'flex';
       document.body.style.overflow = 'hidden';
+      document.body.style.marginRight = scroll + 'px';
       const path = e.target.parentNode.getAttribute('href');
       bigImage.setAttribute('src', path);
     }
     if (e.target && e.target.matches('div.popup')) {
       modal.style.display = '';
       document.body.style.overflow = '';
+      document.body.style.marginRight = '0px';
     }
   });
 };

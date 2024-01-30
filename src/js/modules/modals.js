@@ -4,6 +4,7 @@ const modals = () => {
               modal = document.querySelector(modalSelector),
               close = document.querySelector(closeSelector),
               windows = document.querySelectorAll('[data-modal]');
+              scroll = calcScroll();
 
         trigger.forEach(item => {
             item.addEventListener('click', (e) => {
@@ -16,7 +17,8 @@ const modals = () => {
                 });
 
                 modal.style.display = 'block';
-                document.body.style.overflow = 'hidden';                
+                document.body.style.overflow = 'hidden';
+                document.body.style.marginRight = scroll + 'px';
             });
         });
 
@@ -26,22 +28,15 @@ const modals = () => {
             });
 
             modal.style.display = 'none';
-            document.body.style.overflow = ''; 
+            document.body.style.overflow = '';
+            document.body.style.marginRight = '0px';
         }
 
         close.addEventListener('click', closeModal);
-        window.addEventListener('keydown', (e) => {
-            if(e.key === 'Escape') closeModal();
-        });
 
         modal.addEventListener('click', (e) => {
             if (e.target === modal && closeClickOverlay) {
-                windows.forEach(item => {
-                    item.style.display = 'none';
-                });
-
-                modal.style.display = 'none';
-                document.body.style.overflow = ''; 
+                closeModal();
             }
         });
     }
@@ -50,7 +45,24 @@ const modals = () => {
         setTimeout(function() {
             document.querySelector(selector).style.display = 'block';
             document.body.style.overflow = 'hidden';
+            document.body.style.marginRight = scroll + 'px';
         }, time);
+    }
+
+    function calcScroll() {
+        const div = document.createElement('div');
+        
+        div.style.width = '50px';
+        div.style.height = '50px';
+        div.style.overflowY = 'scroll';
+        div.style.visibility = 'hidden';
+
+        document.body.appendChild(div);
+
+        const scrollWidth = div.offsetWidth - div.clientWidth;
+        div.remove();
+
+        return scrollWidth;
     }
 
     bindModal('.popup_engineer_btn', '.popup_engineer', '.popup_engineer .popup_close');
@@ -60,6 +72,7 @@ const modals = () => {
     bindModal('.popup_calc_profile_button', '.popup_calc_end', '.popup_calc_end_close', false);
     // showModalByTime('.popup', 60000);
 
+    return scroll;
 };
 
 export default modals;
