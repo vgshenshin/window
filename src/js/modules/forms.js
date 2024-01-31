@@ -47,10 +47,7 @@ const forms = () => {
             }
 
             postData('assets/server.php', formData)
-                .then((res) => {
-                    console.log(res);
-                    statusMessage.textContent = message.success;
-                })
+                .then(() => statusMessage.textContent = message.success)
                 .catch(() => statusMessage.textContent = message.failure)
                 .finally(() => {
                     clearInputs();

@@ -6,8 +6,6 @@ const modalsImage = () => {
         bigImage = document.createElement('img'),
         scroll = modals();
 
-        console.log(scroll);
-
     modal.classList.add('popup');
     modal.style.cssText = `
         justify-content: center;
